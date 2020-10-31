@@ -63,12 +63,14 @@ void CChildDrawingView::OnDraw(CDC* pDC)
 	pDC->TextOutW(500, 10, L"어린이용 도형, 색깔 공부");
 
 	pDC->Rectangle(20, 60, 300, 210);
-
 	pDC->TextOutW(330, 110, L"이 도형은 직사각형이에요");
 	pDC->TextOutW(330, 130, L"직사각형은 4개의 선분으로 이루어진 도형이에요^^");
+	pDC->TextOutW(330, 150, L"직사각형을 그리고 싶으면 마우스 왼쪽버튼 누르고 드래그 해보세요^^");
+
 	pDC->Ellipse(50, 240, 250, 430);
 	pDC->TextOutW(330, 300, L"이 도형은 원이에요");
 	pDC->TextOutW(330, 320, L"원은 둥글게 그려진 모양이에요^^");
+	pDC->TextOutW(330, 340, L"영어로는 Circle이에요^^");
 
 	pDC->Rectangle(m_ptLeftTop.x, m_ptLeftTop.y, m_ptRightBottom.x, m_ptRightBottom.y);
 	CBrush brush;
@@ -77,17 +79,22 @@ void CChildDrawingView::OnDraw(CDC* pDC)
 	pDC->Rectangle(20, 450, 300, 580);
 	brush.DeleteObject();
 	pDC->TextOutW(330, 510, L"이 색은 파란색이에요^^");
+	pDC->TextOutW(330, 530, L"영어로는 blue에요^^");
+
 	CBrush brush1;
 	brush1.CreateSolidBrush(RGB(0, 255, 0));
 	pDC->SelectObject(&brush1);
 	pDC->Rectangle(20, 630, 300, 760);
 	brush1.DeleteObject();
 	pDC->TextOutW(330, 690, L"이 색은 초록색이에요^^");
+	pDC->TextOutW(330, 710, L"영어로는 green이에요^^");
+
 	CBrush brush2;
 	brush2.CreateSolidBrush(RGB(255, 0, 0));
 	pDC->SelectObject(&brush2);
 	pDC->Rectangle(20, 800, 300, 930);
 	pDC->TextOutW(330, 860, L"이 색은 빨간색이에요^^");
+	pDC->TextOutW(330, 880, L"영어로는 red에요^^");
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 }
@@ -139,7 +146,7 @@ CChildDrawingDoc* CChildDrawingView::GetDocument() const // 디버그되지 않�
 void CChildDrawingView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
+	m_ptLeftTop = point;
 	CView::OnLButtonDown(nFlags, point);
 }
 
@@ -155,6 +162,10 @@ void CChildDrawingView::OnLButtonUp(UINT nFlags, CPoint point)
 void CChildDrawingView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
+	if (nFlags & MK_LBUTTON)
+	{
+		m_ptRightBottom = point;
+		Invalidate();
+	}
 	CView::OnMouseMove(nFlags, point);
 }
